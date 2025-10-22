@@ -15,7 +15,7 @@ function setupEventListeners() {
     loadBtn.addEventListener('click', loadSelectedInventory);
     
     select.addEventListener('change', (e) => {
-        const selected = inventoryIndex.find(inv => inv.inventory_number === e.target.value);
+        const selected = inventoryIndex.find(inv => Number(inv.inventory_number) === Number(e.target.value));
         if (selected) {
             document.getElementById('itemCount').textContent = 
                 `(${selected.item_count.toLocaleString()} items)`;

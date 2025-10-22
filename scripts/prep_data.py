@@ -20,7 +20,7 @@ def main():
 def prepare_archive_data(csv_path='GLOBALISE - Digitized Indexes of the Dutch East India Company OBP (1602-1799).csv',
                          inventory_column='INVENTORY NUMBER'):
     print(f"reading {csv_path}")
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, low_memory=False)
 
     #load the csv
     print(f"found {len(df)} rows with {df[inventory_column].nunique()} unique inventories")
@@ -36,7 +36,8 @@ def prepare_archive_data(csv_path='GLOBALISE - Digitized Indexes of the Dutch Ea
         filepath = output_dir / f"{safe_filename}.json"
 
         #convert to JSON (by orienting to records)
-        records = group.to_dict(orient='records')
+        records = group.fillna(0).to_dict(orient='records')
+
 
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(records, f, indent=2, ensure_ascii=False)
