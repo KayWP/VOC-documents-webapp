@@ -1,4 +1,4 @@
-/* Archive Explorer Styles */
+/* Archive Explorer Styles - Responsive Version */
 
 :root {
     --primary: #2563eb;
@@ -179,6 +179,7 @@ button:disabled {
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow-x: auto; /* allow horizontal scroll on small screens */
 }
 
 .table-header {
@@ -228,18 +229,32 @@ button:disabled {
 
 table.dataTable {
     border-collapse: collapse !important;
+    width: 100% !important;   /* full container width */
+    table-layout: auto;       /* adjust column widths automatically */
 }
 
 table.dataTable thead th {
     background: var(--background);
     font-weight: 600;
-    padding: 12px 8px;
+    padding: 14px 12px;
     border-bottom: 2px solid var(--border);
+    text-align: left;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text);
+    white-space: normal; /* allow wrapping */
+    vertical-align: middle;
+}
+
+table.dataTable thead th:hover {
+    background: #e2e8f0;
 }
 
 table.dataTable tbody td {
     padding: 10px 8px;
     border-bottom: 1px solid var(--border);
+    white-space: normal; /* allow wrapping */
 }
 
 table.dataTable tbody tr:hover {
@@ -254,7 +269,7 @@ footer {
     font-size: 0.9em;
 }
 
-/* Responsive */
+/* Responsive tweaks */
 @media (max-width: 768px) {
     h1 {
         font-size: 1.8em;
@@ -270,5 +285,15 @@ footer {
     
     button {
         width: 100%;
+    }
+
+    /* Make DataTable fully scrollable on mobile */
+    #tableContainer {
+        padding: 15px;
+    }
+
+    table.dataTable thead th,
+    table.dataTable tbody td {
+        font-size: 0.8em;
     }
 }

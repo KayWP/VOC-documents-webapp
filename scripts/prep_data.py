@@ -36,7 +36,7 @@ def prepare_archive_data(csv_path='GLOBALISE - Digitized Indexes of the Dutch Ea
         filepath = output_dir / f"{safe_filename}.json"
 
         #convert to JSON (by orienting to records)
-        records = group.fillna(0).to_dict(orient='records')
+        records = group.fillna("").to_dict(orient='records')
 
 
         with open(filepath, 'w', encoding='utf-8') as f:

@@ -79,7 +79,10 @@ async function loadSelectedInventory() {
     
     if (!inventoryNum) return;
     
-    const inventory = inventoryIndex.find(inv => inv.inventory_number === inventoryNum);
+    // Convert inventoryNum to number to match the JSON structure
+    const inventory = inventoryIndex.find(inv => 
+        inv.inventory_number === Number(inventoryNum)
+    );
     
     if (!inventory) {
         showError('Inventory not found');
