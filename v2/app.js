@@ -1,6 +1,13 @@
 let inventoryIndex = [];
 let dataTable = null;
 
+// Define columns that can be toggled
+const toggleColumns = [
+    { index: 2, name: 'Start Folio' },
+    { index: 3, name: 'End Folio' },
+    { index: 7, name: 'Geographical Coverage' }
+];
+
 // Load the inventory index on page load
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -10,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         inventoryIndex = await response.json();
         populateInventorySelect();
+        createColumnToggles();
     } catch (error) {
         showError('Error loading inventory index: ' + error.message);
     } finally {
@@ -76,12 +84,12 @@ function displayInventoryData(data) {
             columnDefs: [
                 { width: "50px", targets: 0 },                         // ID
                 { width: "300px", targets: 1 },                        // DESCRIPTION
-                { width: "80px", targets: 2, visible: false },         // FOLIONUMBER (START) - hidden
-                { width: "80px", targets: 3, visible: false },         // FOLIONUMBER (END) - hidden
+                { width: "80px", targets: 2, visible: false },         // Start Folio
+                { width: "80px", targets: 3, visible: false },         // End Folio
                 { width: "100px", targets: 4 },                        // YEAR RANGE
                 { width: "150px", targets: 5 },                        // SETTLEMENT
-                { width: "150px", targets: 6 },                        // LOCATION (TANAP)
-                { targets: 7, visible: false },                        // GEOGRAPHICAL COVERAGE - hidden
+                { width: "150px", targets: 6 },                        // LOCATION
+                { targets: 7, visible: false },                        // Geographical Coverage
                 { width: "150px", targets: 8 }                         // DOCUMENT TYPE
             ]
         });
@@ -111,6 +119,31 @@ function displayInventoryData(data) {
 
     dataTable.draw();
     showTable();
+}
+
+// Create column toggle checkboxes
+function createColumnToggles() {
+    const container = document.getElementById('columnToggles');
+    if (!container) return; // skip if container doesn't exist
+
+    toggleColumns.forEach(col => {
+        const label = document.createElement('label');
+        label.style.marginRight = '10px';
+        label.innerHTML = `
+            <input type="checkbox" data-index="${col.index}" />
+            ${col.name}
+        `;
+        container.appendChild(label);
+    });
+
+    // Add event listeners
+    container.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', event => {
+            const colIndex = parseInt(event.target.dataset.index, 10);
+            const column = dataTable.column(colIndex);
+            column.visible(event.target.checked);
+        });
+    });
 }
 
 // UI Helper Functions
