@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Viewer</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Historical Inventory Viewer</h1>
+            <p class="subtitle">Browse and search historical documents by inventory number</p>
+        </header>
+
+        <div class="controls">
+            <div class="select-wrapper">
+                <label for="inventorySelect">Select Inventory Number:</label>
+                <select id="inventorySelect">
+                    <option value="">-- Select an inventory --</option>
+                </select>
+                <span class="item-count" id="itemCount"></span>
+            </div>
+        </div>
+
+        <div id="loadingIndicator" class="loading">Loading inventories...</div>
+        <div id="errorMessage" class="error"></div>
+
+        <div id="tableContainer" style="display: none;">
+            <table id="inventoryTable" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Folio Start</th>
+                        <th>Folio End</th>
+                        <th>Year(s)</th>
+                        <th>Settlement</th>
+                        <th>Location</th>
+                        <th>Geographical Coverage</th>
+                        <th>Document Type</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
